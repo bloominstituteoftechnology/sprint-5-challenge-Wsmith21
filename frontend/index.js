@@ -70,9 +70,9 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         nameHeader.textContent = learner.fullName;
       }
       if (card.classList.contains('selected')) {
-          infoElement.textContent = learner ? `The selected learner is ${learner.fullName}` : 'No learner is selected';
-      } else {
           infoElement.textContent = 'No learner is selected';
+      } else {
+          infoElement.textContent = `The selected learner is ${learner.fullName}`;
       }
     });
 
