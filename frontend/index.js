@@ -78,10 +78,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
     return card;
 }
-document.addEventListener('DOMContentLoaded', async () => {
-  const infoElement = document.querySelector('body > header > p.info');
-  infoElement.textContent = 'No learner is selected';
-
+async function renderLearnerCards() {
   const learnersData = await fetchData('http://localhost:3003/api/learners');
   const mentorsData = await fetchData('http://localhost:3003/api/mentors');
 
@@ -103,8 +100,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           cardsContainer.appendChild(card);
       });
   }
-});
-
+}
+renderLearnerCards();
 
   const footer = document.querySelector('footer')
   const currentYear = new Date().getFullYear()
