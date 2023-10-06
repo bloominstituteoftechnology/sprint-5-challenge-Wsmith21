@@ -86,10 +86,10 @@ async function renderLearnerCards() {
   const mentorsData = await fetchData('http://localhost:3003/api/mentors');
 
   const infoElement = document.querySelector('p');
-  infoElement.textContent = 'Fetching learner cards...'
+  infoElement.textContent = "Fetching learner cards..."
   axios.get(`${learnersData}/api/learners`)
   .then(res => {
-    infoElement.textContent = 'No learner is selected'
+    infoElement.textContent = "No learner is selected"
   })
 
   if (learnersData && mentorsData) {
