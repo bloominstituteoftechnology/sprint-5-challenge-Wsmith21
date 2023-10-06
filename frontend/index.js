@@ -48,31 +48,33 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     card.appendChild(emailDiv);
     card.appendChild(mentorHeader);
     card.appendChild(mentorList);
+
+    
    
     const infoElement = document.querySelector('body > header > p.info');
     
-    if (card.classList.contains('selected')) {
-        infoElement.textContent = learner ? `The selected learner is ${learner.fullName}` : 'No learner is selected';
-    } else {
-        infoElement.textContent = 'No learner is selected';
-    }
-
+    
     card.addEventListener('click', evt => {
       const isSelected = card.classList.contains('selected');
       
       document.querySelectorAll('.card').forEach(card => {
-            card.classList.remove('selected');
-        });
+        card.classList.remove('selected');
+      });
       if (!isSelected) {
-          card.classList.add('selected');
-          idElement.style.display = 'block';
-          nameHeader.textContent = `${learner.fullName}, ID ${learner.id}`;
+        card.classList.add('selected');
+        idElement.style.display = 'block';
+        nameHeader.textContent = `${learner.fullName}, ID ${learner.id}`;
       } else {
-          card.classList.remove('selected');
-          idElement.style.display = 'none';
-          nameHeader.textContent = learner.fullName;
+        card.classList.remove('selected');
+        idElement.style.display = 'none';
+        nameHeader.textContent = learner.fullName;
       }
-  });
+      if (card.classList.contains('selected')) {
+          infoElement.textContent = learner ? `The selected learner is ${learner.fullName}` : 'No learner is selected';
+      } else {
+          infoElement.textContent = 'No learner is selected';
+      }
+    });
 
     return card;
 }
