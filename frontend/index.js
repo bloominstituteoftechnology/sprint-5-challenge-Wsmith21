@@ -1,3 +1,5 @@
+
+
 async function sprintChallenge5() { // Note the async keyword, in case you wish to use `await` inside sprintChallenge5
   // 👇 WORK WORK BELOW THIS LINE 👇
   
@@ -10,6 +12,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         return null;
     }
 }
+
 
   function buildLearnerCard(learner) {
     const card = document.createElement('div');
@@ -51,7 +54,7 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 
     
    
-    const infoElement = document.querySelector('body > header > p.info');
+    const infoElement = document.querySelector('p');
     
     
     card.addEventListener('click', evt => {
@@ -81,6 +84,13 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
 async function renderLearnerCards() {
   const learnersData = await fetchData('http://localhost:3003/api/learners');
   const mentorsData = await fetchData('http://localhost:3003/api/mentors');
+
+  const infoElement = document.querySelector('p');
+  infoElement.textContent = 'Fetching learner cards...'
+  axios.get(`${learnersData}/api/learners`)
+  .then(res => {
+    infoElement.textContent = 'No learner card selected'
+  })
 
   if (learnersData && mentorsData) {
       const learnersWithMentors = learnersData.map(learner => {
