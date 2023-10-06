@@ -70,15 +70,18 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
         nameHeader.textContent = learner.fullName;
       }
       if (card.classList.contains('selected')) {
-          infoElement.textContent = 'No learner is selected';
+          infoElement.textContent = learner ? `The selected learner is ${learner.fullName}` : 'No learner is selected';
       } else {
-          infoElement.textContent = `The selected learner is ${learner.fullName}`;
+          infoElement.textContent = 'No learner is selected';
       }
     });
 
     return card;
 }
-async function renderLearnerCards() {
+document.addEventListener('DOMContentLoaded', async () => {
+  const infoElement = document.querySelector('body > header > p.info');
+  infoElement.textContent = 'No learner is selected';
+
   const learnersData = await fetchData('http://localhost:3003/api/learners');
   const mentorsData = await fetchData('http://localhost:3003/api/mentors');
 
@@ -100,8 +103,8 @@ async function renderLearnerCards() {
           cardsContainer.appendChild(card);
       });
   }
-}
-renderLearnerCards();
+});
+
 
   const footer = document.querySelector('footer')
   const currentYear = new Date().getFullYear()
