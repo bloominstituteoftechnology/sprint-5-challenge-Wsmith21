@@ -82,33 +82,38 @@ async function sprintChallenge5() { // Note the async keyword, in case you wish 
     return card;
 }
 async function renderLearnerCards() {
-  const learnersData = await fetchData('http://localhost:3003/api/learners');
-  const mentorsData = await fetchData('http://localhost:3003/api/mentors');
+  const infoElement = document.querySelector('body > header > p.info');
+  infoElement.textContent = "Fetching learner cards...";
 
-  const infoElement = document.querySelector('p');
-  infoElement.textContent = "Fetching learner cards..."
-  axios.get(`${learnersData}/api/learners`)
-  .then(res => {
-    infoElement.textContent = "No learner is selected"
-  })
+  try {
+      const [learnersData, mentorsData] = await Promise.all([
+          fetchData('http://localhost:3003/api/learners'),
+          fetchData('http://localhost:3003/api/mentors')
+      ]);
 
-  if (learnersData && mentorsData) {
-      const learnersWithMentors = learnersData.map(learner => {
-          return {
-              ...learner,
-              mentors: learner.mentors.map(mentorID => {
-                  const mentor = mentorsData.find(mentor => mentor.id === mentorID);
-                  return mentor ? `${mentor.firstName} ${mentor.lastName}` : `Unknown Mentor ${mentorID}`;
-              })
-          };
-      });
+      if (learnersData && mentorsData) {
+          const learnersWithMentors = learnersData.map(learner => {
+              return {
+                  ...learner,
+                  mentors: learner.mentors.map(mentorID => {
+                      const mentor = mentorsData.find(mentor => mentor.id === mentorID);
+                      return mentor ? `${mentor.firstName} ${mentor.lastName}` : `Unknown Mentor ${mentorID}`;
+                  })
+              };
+          });
 
-      const cardsContainer = document.querySelector('.cards');
+          const cardsContainer = document.querySelector('.cards');
 
-      learnersWithMentors.forEach(learner => {
-          const card = buildLearnerCard(learner);
-          cardsContainer.appendChild(card);
-      });
+          learnersWithMentors.forEach(learner => {
+              const card = buildLearnerCard(learner);
+              cardsContainer.appendChild(card);
+          });
+
+          infoElement.textContent = 'No learner is selected';
+      }
+  } catch (error) {
+      console.error('Error fetching data:', error);
+      infoElement.textContent = 'Error fetching learner data';
   }
 }
 renderLearnerCards();
