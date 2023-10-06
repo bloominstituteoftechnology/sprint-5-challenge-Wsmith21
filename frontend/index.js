@@ -89,7 +89,7 @@ async function renderLearnerCards() {
   infoElement.textContent = 'Fetching learner cards...'
   axios.get(`${learnersData}/api/learners`)
   .then(res => {
-    infoElement.textContent = 'No learner card selected'
+    infoElement.textContent = 'No learner is selected'
   })
 
   if (learnersData && mentorsData) {
